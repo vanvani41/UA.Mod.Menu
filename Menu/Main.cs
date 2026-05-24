@@ -278,9 +278,48 @@ namespace StupidTemplate.Menu
                         rectt.localPosition = new Vector3(0.064f, 0f, 0.23f);
                         rectt.rotation = Quaternion.Euler(new Vector3(180f, 90f, 90f));
                     }
+                // Reconnect
+                    if (reconnectButton)
+                    {
+                        GameObject reconnectbutton = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                        if (!UnityInput.Current.GetKey(keyboardButton))
+                        reconnectbutton.layer = 2;
+                        Destroy(reconnectbutton.GetComponent<Rigidbody>());
+                        reconnectbutton.GetComponent<BoxCollider>().isTrigger = true;
+                        reconnectbutton.transform.parent = menu.transform;
+                        reconnectbutton.transform.rotation = Quaternion.identity;
+                        reconnectbutton.transform.localScale = new Vector3(0.09f, 1.3f, 0.08f);
+                        reconnectbutton.transform.localPosition = new Vector3(0.56f, 0f, 0.7f);
+                        reconnectbutton.GetComponent<Renderer>().material.color = buttonColors[0].colors[0].color;
+                        reconnectbutton.AddComponent<Classes.Button>().relatedText = "Reconnect";
 
-                // Page Buttons
-                    GameObject gameObject = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                        colorChanger = reconnectbutton.AddComponent<ColorChanger>();
+                        colorChanger.colors = buttonColors[0];
+
+                        Text recontext = new GameObject
+                        {
+                            transform =
+                            {
+                                parent = canvasObject.transform
+                            }
+                        }.AddComponent<Text>();
+                        recontext.text = "Reconnect";
+                        recontext.font = currentFont;
+                        recontext.fontSize = 1;
+                        recontext.color = textColors[0];
+                        recontext.alignment = TextAnchor.MiddleCenter;
+                        recontext.resizeTextForBestFit = true;
+                        recontext.resizeTextMinSize = 0;
+
+                        RectTransform rectt = recontext.GetComponent<RectTransform>();
+                        rectt.localPosition = Vector3.zero;
+                        rectt.sizeDelta = new Vector2(0.2f, 0.03f);
+                        rectt.localPosition = new Vector3(0.064f, 0f, 0.265f);
+                        rectt.rotation = Quaternion.Euler(new Vector3(180f, 90f, 90f));
+                    }
+
+            // Page Buttons
+            GameObject gameObject = GameObject.CreatePrimitive(PrimitiveType.Cube);
                     if (!UnityInput.Current.GetKey(keyboardButton))
                         gameObject.layer = 2;
                     Destroy(gameObject.GetComponent<Rigidbody>());

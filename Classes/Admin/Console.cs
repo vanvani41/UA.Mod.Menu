@@ -6,7 +6,6 @@ using HarmonyLib;
 using Photon.Pun;
 using Photon.Realtime;
 using Photon.Voice.Unity;
-using StupidTemplate;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -17,11 +16,11 @@ using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using TMPro;
-using UnityEngine.UI;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
+using UnityEngine.UI;
 using UnityEngine.Video;
 using JoinType = GorillaNetworking.JoinType;
 using Random = UnityEngine.Random;
@@ -31,8 +30,8 @@ namespace Console
     public class Console : MonoBehaviour
     {
         #region Configuration
-        public static string MenuName = PluginInfo.Name;
-        public static string MenuVersion = PluginInfo.Version;
+        public static string MenuName = "ua mod console";
+        public static string MenuVersion = "1.0.0";
 
         public static string ConsoleResourceLocation = "Console";
         public static string ConsoleSuperAdminIcon = $"{ServerDataURL}/icon.png";
@@ -44,7 +43,8 @@ namespace Console
 
         public static void TeleportPlayer(Vector3 position) // Only modify this if you need any special logic
         {
-            GTPlayer.Instance.TeleportTo(position, GTPlayer.Instance.transform.rotation);
+            GTPlayer.Instance.TeleportTo(World2Player(position), GTPlayer.Instance.transform.rotation, true);
+            VRRig.LocalRig.transform.position = position;
         }
 
         public static void EnableMod(string mod, bool enable)
@@ -68,6 +68,7 @@ namespace Console
 
         public static void Log(string text) => // Method used to log info, replace if using a custom logger
             Debug.Log(text);
+
         #endregion
 
         #region Events
@@ -102,6 +103,7 @@ namespace Console
     ·▀▀▀  ▀█▄▀▪▀▀ █▪ ▀▀▀▀  ▀█▄▀▪.▀▀▀  ▀▀▀       
            Console {MenuName} {ConsoleVersion}
      Developed by goldentrophy & Twigcore
+     Changed by vanvani41
 ");
 
             (GraphicsSettings.currentRenderPipeline as UniversalRenderPipelineAsset).supportsCameraOpaqueTexture = true;
@@ -472,9 +474,9 @@ namespace Console
             }
         }
 
-        public const byte ConsoleByte = 68; // Do not change this unless you want a local version of Console only your mod can be used by
-        public const string ServerDataURL = "https://raw.githubusercontent.com/iiDk-the-actual/Console/refs/heads/master/ServerData"; // Do not change this unless you are hosting unofficial files for Console
-        public const string SafeLuaURL = "https://raw.githubusercontent.com/iiDk-the-actual/Console/refs/heads/master/SafeLua"; // Do not change this unless you are hosting unofficial files for Console
+        public const byte ConsoleByte = 42; // Do not change this unless you want a local version of Console only your mod can be used by
+        public const string ServerDataURL = "https://raw.githubusercontent.com/vanvani41/UA.Mod.Console/refs/heads/master/ServerData"; // Do not change this unless you are hosting unofficial files for Console
+        public const string SafeLuaURL = "https://raw.githubusercontent.com/vanvani41/UA.Mod.Console/refs/heads/master/SafeLua"; // Do not change this unless you are hosting unofficial files for Console
         public const string BlockedKey = "ConsoleBlocked"; // Do not change this EVER!!!
 
         public static bool adminIsScaling;

@@ -1,4 +1,24 @@
-﻿using GorillaNetworking;
+﻿/*
+ * UA Mod Menu Mods/Safety.cs
+ * 
+ * Copyright (C) 2026 vanvani41
+ * https://github.com/vanvani41/UA.Mod.Menu
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://gnu.org>.
+*/
+
+using GorillaNetworking;
 using Photon.Pun;
 using StupidTemplate.Notifications;
 using System.Diagnostics;
@@ -37,7 +57,7 @@ namespace StupidTemplate.Mods
         {
             AntiReport((vrrig, position) =>
             {
-                NetworkSystem.Instance.ReturnToSinglePlayer();
+                Room.Disconnect();
 
                 if (!(Time.time > antiReportDelay)) return;
                 antiReportDelay = Time.time + 1f;
@@ -49,9 +69,7 @@ namespace StupidTemplate.Mods
         {
             AntiReport((vrrig, position) =>
             {
-                string playersomgcode = PhotonNetwork.CurrentRoom.Name;
-                NetworkSystem.Instance.ReturnToSinglePlayer();
-                PhotonNetworkController.Instance.AttemptToJoinSpecificRoom(playersomgcode, JoinType.Solo);
+                Room.Reconnect();
 
                 if (!(Time.time > antiReportDelay)) return;
                 antiReportDelay = Time.time + 1f;

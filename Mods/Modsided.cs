@@ -1,5 +1,5 @@
 ﻿/*
- * UA Mod Menu Mods/Overpowered.cs
+ * UA Mod Menu Mods/Modsided.cs
  * 
  * Copyright (C) 2026 vanvani41
  * https://github.com/vanvani41/UA.Mod.Menu
@@ -17,12 +17,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://gnu.org>.
 */
-
-using static StupidTemplate.Menu.Main;
-
 namespace StupidTemplate.Mods
 {
-    public class Overpowered
+    public class Modsided
     {
     }
 }

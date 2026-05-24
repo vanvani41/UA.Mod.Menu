@@ -1,3 +1,23 @@
+/*
+ * UA Mod Menu Mods/Guns.cs
+ * 
+ * Copyright (C) 2026 vanvani41
+ * https://github.com/vanvani41/UA.Mod.Menu
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://gnu.org>.
+*/
+
 using GorillaLocomotion;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -6,7 +26,7 @@ using static StupidTemplate.Menu.Main;
 
 namespace StupidTemplate.Mods
 {
-    internal class Guns
+    public class Guns
     {
         private static bool Grabbing => ControllerInputPoller.instance.rightGrab || (Mouse.current != null && Mouse.current.rightButton.isPressed);
         private static bool Triggering => ControllerInputPoller.TriggerFloat(XRNode.RightHand) > 0.5f || (Mouse.current != null && Mouse.current.leftButton.isPressed);
@@ -57,7 +77,7 @@ namespace StupidTemplate.Mods
                         {
                             rig.enabled = false;
                             rig.transform.position = target.transform.position;
-                            tagReturnTime = Time.time + 0.5f;
+                            tagReturnTime = Time.time + 0.3f;
                             waitingToReturn = true;
                         }
                     }

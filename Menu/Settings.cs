@@ -46,6 +46,7 @@ namespace StupidTemplate
 
         public static bool fpsCounter = true;
         public static bool disconnectButton = true;
+        public static bool reconnectButton = true;
         public static bool rightHanded;
         public static bool disableNotifications;
 
