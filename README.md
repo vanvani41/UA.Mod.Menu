@@ -13,7 +13,7 @@ And i am going to make a tutorial, to help **YOU** create your own mod menu, but
 <details>
 <summary><b>Can I use your mod menu's code?</b></summary>
 
-**Yes, you can!** But there’s a problem for you, monke! I have [**GNU GPL 3.0 License**](https://www.gnu.org/licenses/gpl-3.0.en.html) license, which means that if you use my code, you:  
+**Yes, you can!** But there’s a problem for you, monke! I have [**GNU GPL 3.0 License**](https://www.gnu.org/licenses/gpl-3.0.en.html), which means that if you use my code, you:  
 - **Must** open-source your project.
 - **Cannot** delete copyright text in the file where you took the code.
 - **License** your project with the same license (GNU General Public License 3.0).
