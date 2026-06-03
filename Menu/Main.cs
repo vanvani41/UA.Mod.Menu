@@ -135,7 +135,11 @@ namespace StupidTemplate.Menu
                 Destroy(menu.GetComponent<Rigidbody>());
                 Destroy(menu.GetComponent<BoxCollider>());
                 Destroy(menu.GetComponent<Renderer>());
-                menu.transform.localScale = new Vector3(0.1f, 0.3f, 0.3825f);
+                if (thickmenu)
+                    menu.transform.localScale = new Vector3(0.1f, 0.3f, 0.3825f);
+                else
+                    menu.transform.localScale = new Vector3(0.1f, 0.2f, 0.3825f);
+
 
             // Menu Background
                 menuBackground = GameObject.CreatePrimitive(PrimitiveType.Cube);
@@ -187,11 +191,7 @@ namespace StupidTemplate.Menu
 
             RectTransform versioncomponent = version.GetComponent<RectTransform>();
             versioncomponent.sizeDelta = new Vector2(0.2f, 0.04f);
-            versioncomponent.localPosition = new Vector3(
-                -0.04f,  
-                0f,  
-                -0.0001f    
-            );
+            versioncomponent.localPosition = new Vector3(-0.04f, 0f, -0.0001f);
             versioncomponent.rotation = Quaternion.Euler(0f, 90f, 90f);
 
             text.font = currentFont;
@@ -209,7 +209,7 @@ namespace StupidTemplate.Menu
             RectTransform component = text.GetComponent<RectTransform>();
             component.localPosition = Vector3.zero;
             component.sizeDelta = new Vector2(0.28f, 0.05f);
-            component.position = new Vector3(0.06f, 0f, 0.165f);
+            component.position = new Vector3(0.056f, 0f, 0.165f);
             component.rotation = Quaternion.Euler(180f, 90f, 90f);
 
             if (fpsCounter)
@@ -234,9 +234,9 @@ namespace StupidTemplate.Menu
                     RectTransform component2 = fpsObject.GetComponent<RectTransform>();
                     component2.localPosition = Vector3.zero;
                     component2.sizeDelta = new Vector2(0.28f, 0.02f);
-                    component2.position = new Vector3(0.06f, 0f, 0.135f);
+                    component2.position = new Vector3(0.056f, 0f, 0.135f);
                     component2.rotation = Quaternion.Euler(new Vector3(180f, 90f, 90f));
-                }
+            }
 
             // Buttons
                 // Disconnect
@@ -250,7 +250,7 @@ namespace StupidTemplate.Menu
                         disconnectbutton.transform.parent = menu.transform;
                         disconnectbutton.transform.rotation = Quaternion.identity;
                         disconnectbutton.transform.localScale = new Vector3(0.09f, 1.3f, 0.08f);
-                        disconnectbutton.transform.localPosition = new Vector3(0.56f, 0f, 0.6f);
+                        disconnectbutton.transform.localPosition = new Vector3(0.56f, 0f, 0.55f);
                         disconnectbutton.GetComponent<Renderer>().material.color = buttonColors[0].colors[0].color;
                         disconnectbutton.AddComponent<Classes.Button>().relatedText = "Disconnect";
 
@@ -275,7 +275,7 @@ namespace StupidTemplate.Menu
                         RectTransform rectt = discontext.GetComponent<RectTransform>();
                         rectt.localPosition = Vector3.zero;
                         rectt.sizeDelta = new Vector2(0.2f, 0.03f);
-                        rectt.localPosition = new Vector3(0.064f, 0f, 0.23f);
+                        rectt.localPosition = new Vector3(0.064f, 0f, 0.21f);
                         rectt.rotation = Quaternion.Euler(new Vector3(180f, 90f, 90f));
                     }
                 // Reconnect
@@ -289,7 +289,7 @@ namespace StupidTemplate.Menu
                         reconnectbutton.transform.parent = menu.transform;
                         reconnectbutton.transform.rotation = Quaternion.identity;
                         reconnectbutton.transform.localScale = new Vector3(0.09f, 1.3f, 0.08f);
-                        reconnectbutton.transform.localPosition = new Vector3(0.56f, 0f, 0.7f);
+                        reconnectbutton.transform.localPosition = new Vector3(0.56f, 0f, 0.65f);
                         reconnectbutton.GetComponent<Renderer>().material.color = buttonColors[0].colors[0].color;
                         reconnectbutton.AddComponent<Classes.Button>().relatedText = "Reconnect";
 
@@ -314,7 +314,7 @@ namespace StupidTemplate.Menu
                         RectTransform rectt = recontext.GetComponent<RectTransform>();
                         rectt.localPosition = Vector3.zero;
                         rectt.sizeDelta = new Vector2(0.2f, 0.03f);
-                        rectt.localPosition = new Vector3(0.064f, 0f, 0.265f);
+                        rectt.localPosition = new Vector3(0.064f, 0f, 0.245f);
                         rectt.rotation = Quaternion.Euler(new Vector3(180f, 90f, 90f));
                     }
 
@@ -327,7 +327,7 @@ namespace StupidTemplate.Menu
                     gameObject.transform.parent = menu.transform;
                     gameObject.transform.rotation = Quaternion.identity;
                     gameObject.transform.localScale = new Vector3(0.09f, 0.2f, 1f);
-                    gameObject.transform.localPosition = new Vector3(0.56f, 1f, 0);
+                    gameObject.transform.localPosition = new Vector3(0.6f, 1f, 0);
                     gameObject.GetComponent<Renderer>().material.color = buttonColors[0].colors[0].color;
                     gameObject.AddComponent<Classes.Button>().relatedText = "PreviousPage";
 
@@ -351,7 +351,7 @@ namespace StupidTemplate.Menu
                     component = text.GetComponent<RectTransform>();
                     component.localPosition = Vector3.zero;
                     component.sizeDelta = new Vector2(0.2f, 0.03f);
-                    component.localPosition = new Vector3(0.064f, 0.195f, 0f);
+                    component.localPosition = new Vector3(0.052f, 0.195f, 0f);
                     component.rotation = Quaternion.Euler(new Vector3(180f, 90f, 90f));
 
                     gameObject = GameObject.CreatePrimitive(PrimitiveType.Cube);
@@ -388,13 +388,13 @@ namespace StupidTemplate.Menu
                     component = text.GetComponent<RectTransform>();
                     component.localPosition = Vector3.zero;
                     component.sizeDelta = new Vector2(0.2f, 0.03f);
-                    component.localPosition = new Vector3(0.064f, -0.195f, 0f);
+                    component.localPosition = new Vector3(0.06f, -0.195f, 0f);
                     component.rotation = Quaternion.Euler(new Vector3(180f, 90f, 90f));
 
-                // Mod Buttons
-                    ButtonInfo[] activeButtons = buttons[currentCategory].Skip(pageNumber * buttonsPerPage).Take(buttonsPerPage).ToArray();
-                    for (int i = 0; i < activeButtons.Length; i++)
-                        CreateButton(i * 0.1f, activeButtons[i]);
+            // Mod Buttons
+            ButtonInfo[] activeButtons = GetVisibleButtons(currentCategory).Skip(pageNumber * buttonsPerPage).Take(buttonsPerPage).ToArray();
+            for (int i = 0; i < activeButtons.Length; i++)
+                CreateButton(i * 0.1f, activeButtons[i]);
         }
 
         public static void CreateButton(float offset, ButtonInfo method)
@@ -528,7 +528,11 @@ namespace StupidTemplate.Menu
 
         public static void Toggle(string buttonText)
         {
-            int lastPage = ((buttons[currentCategory].Length + buttonsPerPage - 1) / buttonsPerPage) - 1;
+            ButtonInfo[] visibleButtons = GetVisibleButtons(currentCategory);
+            int lastPage = ((visibleButtons.Length + buttonsPerPage - 1) / buttonsPerPage) - 1;
+            if (lastPage < 0)
+                lastPage = 0;
+
             if (buttonText == "PreviousPage")
             {
                 pageNumber--;
@@ -578,7 +582,17 @@ namespace StupidTemplate.Menu
             RecreateMenu();
         }
 
-        private static readonly Dictionary<string, (int Category, int Index)> cacheGetIndex = new Dictionary<string, (int Category, int Index)>(); // Looping through 800 elements is not a light task :/
+        public static ButtonInfo[] GetVisibleButtons(int category)
+        {
+            if (category < 0 || category >= buttons.Length)
+                return Array.Empty<ButtonInfo>();
+
+            return buttons[category]
+                .Where(button => button != null && button.IsVisible())
+                .ToArray();
+        }
+
+        private static readonly Dictionary<string, (int Category, int Index)> cacheGetIndex = new Dictionary<string, (int Category, int Index)>(); // Looping through 800 elements is not a light task :/        public static ButtonInfo GetIndex(string buttonText)
         public static ButtonInfo GetIndex(string buttonText)
         {
             if (buttonText == null)
@@ -660,6 +674,7 @@ namespace StupidTemplate.Menu
                 targetWorldScale.z / parentScale.z
             );
         }
+
         public static void FixStickyColliders(GameObject platform)
         {
             Vector3[] localPositions = new Vector3[]

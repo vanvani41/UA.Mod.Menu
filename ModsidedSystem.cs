@@ -28,20 +28,28 @@ namespace StupidTemplate
 {
     public class ModsidedSystem : MonoBehaviour
     {
-        public const byte ModSidedByte = 42;
+        public const byte ModSidedByte = 43;
+        private static bool initialized;
 
         public static void Init()
         {
+            if (initialized || PhotonNetwork.NetworkingClient == null) return;
             PhotonNetwork.NetworkingClient.EventReceived += OnEventReceived;
+            initialized = true;
         }
 
         public static void Cleanup()
         {
+            if (!initialized || PhotonNetwork.NetworkingClient == null) return;
             PhotonNetwork.NetworkingClient.EventReceived -= OnEventReceived;
+            initialized = false;
         }
 
         public static void AnnouncePresence()
         {
+            if (!initialized)
+                Init();
+
             if (!PhotonNetwork.InRoom) return;
             PhotonNetwork.RaiseEvent(
                 ModSidedByte,
@@ -54,8 +62,10 @@ namespace StupidTemplate
         private static void OnEventReceived(EventData data)
         {
             if (data.Code != ModSidedByte) return;
+            if (PhotonNetwork.NetworkingClient?.CurrentRoom == null) return;
+
             Player sender = PhotonNetwork.NetworkingClient.CurrentRoom.GetPlayer(data.Sender);
-            if (sender != null)
+            if (sender != null && !string.IsNullOrEmpty(sender.UserId))
                 Nametags.modUsers.Add(sender.UserId);
         }
     }

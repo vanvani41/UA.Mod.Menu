@@ -11,6 +11,19 @@ namespace StupidTemplate.Classes
         public Action disableMethod = null;
         public bool enabled = false;
         public bool isTogglable = true;
+        public Func<bool> isVisible = null;
         public string toolTip = "This button doesn't have a tooltip/tutorial.";
+
+        public bool IsVisible()
+        {
+            try
+            {
+                return isVisible == null || isVisible.Invoke();
+            }
+            catch
+            {
+                return false;
+            }
+        }
     }
 }

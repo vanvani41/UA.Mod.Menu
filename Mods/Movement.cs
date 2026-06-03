@@ -196,6 +196,175 @@ namespace StupidTemplate.Mods
             }
         }
 
+        public static GameObject platngl;
+        public static GameObject platngr;
+
+        public static void GripNoclipPlatforms()
+        {
+            NoclipPlatforms(ControllerInputPoller.instance.leftGrab || ControllerInputPoller.instance.rightGrab);
+
+            if (ControllerInputPoller.instance.leftGrab)
+            {
+                if (platngl == null)
+                {
+                    platngl = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                    platngl.transform.localScale = new Vector3(0.025f, 0.3f, 0.4f);
+                    platngl.transform.position = TrueLeftHand().position - (Vector3.up * 0.1f);
+                    platngl.transform.rotation = TrueLeftHand().rotation;
+                    FixStickyColliders(platngl);
+                    platngl.AddComponent<ColorChanger>().colors = StupidTemplate.Settings.backgroundColor;
+                }
+            }
+            else
+            {
+                if (platngl != null) { Object.Destroy(platngl); platngl = null; }
+            }
+            if (ControllerInputPoller.instance.rightGrab)
+            {
+                if (platngr == null)
+                {
+                    platngr = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                    platngr.transform.localScale = new Vector3(0.025f, 0.3f, 0.4f);
+                    platngr.transform.position = TrueRightHand().position - (Vector3.up * 0.1f);
+                    platngr.transform.rotation = TrueRightHand().rotation;
+                    FixStickyColliders(platngr);
+                    platngr.AddComponent<ColorChanger>().colors = StupidTemplate.Settings.backgroundColor;
+                }
+            }
+            else
+            {
+                if (platngr != null) { Object.Destroy(platngr); platngr = null; }
+            }
+        }
+
+        public static GameObject platntl;
+        public static GameObject platntr;
+
+        public static void TriggerNoclipPlatforms()
+        {
+            NoclipPlatforms(ControllerInputPoller.instance.leftControllerTriggerButton || ControllerInputPoller.instance.rightControllerTriggerButton);
+
+            if (ControllerInputPoller.instance.leftControllerTriggerButton)
+            {
+                if (platntl == null)
+                {
+                    platntl = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                    platntl.transform.localScale = new Vector3(0.025f, 0.3f, 0.4f);
+                    platntl.transform.position = TrueLeftHand().position - (Vector3.up * 0.1f);
+                    platntl.transform.rotation = TrueLeftHand().rotation;
+                    FixStickyColliders(platntl);
+                    platntl.AddComponent<ColorChanger>().colors = StupidTemplate.Settings.backgroundColor;
+                }
+            }
+            else
+            {
+                if (platntl != null) { Object.Destroy(platntl); platntl = null; }
+            }
+
+            if (ControllerInputPoller.instance.rightControllerTriggerButton)
+            {
+                if (platntr == null)
+                {
+                    platntr = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                    platntr.transform.localScale = new Vector3(0.025f, 0.3f, 0.4f);
+                    platntr.transform.position = TrueRightHand().position - (Vector3.up * 0.1f);
+                    platntr.transform.rotation = TrueRightHand().rotation;
+                    FixStickyColliders(platntr);
+                    platntr.AddComponent<ColorChanger>().colors = StupidTemplate.Settings.backgroundColor;
+                }
+            }
+            else
+            {
+                if (platntr != null) { Object.Destroy(platntr); platntr = null; }
+            }
+        }
+
+        public static GameObject platsngl;
+        public static GameObject platsngr;
+
+        public static void GripNoclipStickyPlatforms()
+        {
+            NoclipPlatforms(ControllerInputPoller.instance.leftGrab || ControllerInputPoller.instance.rightGrab);
+
+            if (ControllerInputPoller.instance.leftGrab)
+            {
+                if (platsngl == null)
+                {
+                    platsngl = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+                    platsngl.transform.localScale = new Vector3(0.025f, 0.3f, 0.4f);
+                    platsngl.transform.position = TrueLeftHand().position;
+                    platsngl.transform.rotation = TrueLeftHand().rotation;
+                    FixStickyColliders1(platsngl);
+                    platsngl.AddComponent<ColorChanger>().colors = StupidTemplate.Settings.backgroundColor;
+                }
+            }
+            else
+            {
+                if (platsngl != null) { Object.Destroy(platsngl); platsngl = null; }
+            }
+
+            if (ControllerInputPoller.instance.rightGrab)
+            {
+                if (platsngr == null)
+                {
+                    platsngr = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+                    platsngr.transform.localScale = new Vector3(0.025f, 0.3f, 0.4f);
+                    platsngr.transform.position = TrueRightHand().position;
+                    platsngr.transform.rotation = TrueRightHand().rotation;
+                    FixStickyColliders1(platsngr);
+                    platsngr.AddComponent<ColorChanger>().colors = StupidTemplate.Settings.backgroundColor;
+                }
+            }
+            else
+            {
+                if (platsngr != null) { Object.Destroy(platsngr); platsngr = null; }
+            }
+        }
+
+        public static GameObject platnstl;
+        public static GameObject platnstr;
+
+        public static void TriggerNoclipStickyPlatforms()
+        {
+            NoclipPlatforms(ControllerInputPoller.instance.leftControllerTriggerButton || ControllerInputPoller.instance.rightControllerTriggerButton);
+
+            if (ControllerInputPoller.instance.leftControllerTriggerButton)
+            {
+                if (platnstl == null)
+                {
+                    platnstl = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+                    platnstl.transform.localScale = new Vector3(0.025f, 0.3f, 0.4f);
+                    platnstl.transform.position = TrueLeftHand().position;
+                    platnstl.transform.rotation = TrueLeftHand().rotation;
+                    FixStickyColliders1(platnstl);
+                    platnstl.AddComponent<ColorChanger>().colors = StupidTemplate.Settings.backgroundColor;
+                }
+            }
+            else
+            {
+                if (platnstl != null) { Object.Destroy(platnstl); platnstl = null; }
+            }
+
+            if (ControllerInputPoller.instance.rightControllerTriggerButton)
+            {
+                if (platnstr == null)
+                {
+                    platnstr = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+                    platnstr.transform.localScale = new Vector3(0.025f, 0.3f, 0.4f);
+                    platnstr.transform.position = TrueRightHand().position;
+                    platnstr.transform.rotation = TrueRightHand().rotation;
+                    FixStickyColliders1(platnstr);
+                    platnstr.AddComponent<ColorChanger>().colors = StupidTemplate.Settings.backgroundColor;
+                }
+            }
+            else
+            {
+                if (platnstr != null) { Object.Destroy(platnstr); platnstr = null; }
+            }
+        }
+
+
+
         public static void Speedboost()
         {
             GTPlayer.Instance.maxJumpSpeed = Settings.Movement.Speedboost;
@@ -300,13 +469,45 @@ namespace StupidTemplate.Mods
             }
         }
 
+        private static int? noclipFlyLayerMask;
+
         public static void NoclipFly()
         {
-            MeshCollider[] colliders = Resources.FindObjectsOfTypeAll<MeshCollider>();
             if (ControllerInputPoller.instance.rightControllerPrimaryButton)
             {
+                if (!noclipFlyLayerMask.HasValue)
+                    noclipFlyLayerMask = GTPlayer.Instance.locomotionEnabledLayers;
+
+                GTPlayer.Instance.locomotionEnabledLayers = 0;
                 GTPlayer.Instance.transform.position += GorillaTagger.Instance.headCollider.transform.forward * Time.deltaTime * Settings.Movement.flySpeed;
                 GorillaTagger.Instance.rigidbody.linearVelocity = Vector3.zero;
+            }
+            else
+            {
+                NoclipFlyDisable();
+            }
+        }
+
+        public static void NoclipFlyDisable()
+        {
+            if (!noclipFlyLayerMask.HasValue)
+                return;
+
+            GTPlayer.Instance.locomotionEnabledLayers = noclipFlyLayerMask.Value;
+            noclipFlyLayerMask = null;
+        }
+
+        private static bool noclipPlatformsActive = false;
+
+        public static void NoclipPlatforms(bool input)
+        {
+            if (noclipPlatformsActive == input)
+                return;
+
+            noclipPlatformsActive = input;
+            MeshCollider[] colliders = Resources.FindObjectsOfTypeAll<MeshCollider>();
+            if (input)
+            {
                 foreach (MeshCollider collider in colliders)
                 {
                     collider.enabled = false;
@@ -383,14 +584,35 @@ namespace StupidTemplate.Mods
                 GorillaTagger.Instance.rigidbody.linearVelocity = Vector3.forward;
             }
         }
-        public static void SlowMotion()
+        public static void SlowMotionBH()
         {
-            Time.timeScale = 0.35f;
+            if (ControllerInputPoller.instance.rightControllerSecondaryButton)
+            {
+                Time.timeScale = 0.35f;
+            }
+            else
+            {
+                Time.timeScale = 1f;
+            }
         }
 
-        public static void SlowMotionDisable()
+        public static bool smpressed = false;
+        public static bool smOn = false;
+
+        public static void SlowMotionBT()
         {
-            Time.timeScale = 1f;
+            bool isDown = ControllerInputPoller.instance.rightControllerSecondaryButton;
+
+            if (isDown && !smpressed)
+                smOn = !smOn;
+
+            smpressed = isDown;
+
+            if (smOn)
+                Time.timeScale = 0.35f;
+            else
+                Time.timeScale = 1.0f;
         }
+
     }
 }

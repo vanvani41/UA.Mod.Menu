@@ -18,6 +18,7 @@
  * along with this program.  If not, see <https://gnu.org>.
 */
 
+using Console;
 using StupidTemplate.Classes;
 using StupidTemplate.Mods;
 using static StupidTemplate.Menu.Main;
@@ -28,12 +29,12 @@ namespace StupidTemplate.Menu
     public class Buttons
     {
         public static ButtonInfo[][] buttons = new ButtonInfo[][]
-        {
+              {
             new ButtonInfo[] { // Main Mods [0]
+                new ButtonInfo { buttonText = "Console", method = () => currentCategory = 14, isTogglable = false, isVisible = ServerData.LocalPlayerHasConsoleAccess, toolTip = "Opens the admin console page."},
                 new ButtonInfo { buttonText = "Settings", method =() => currentCategory = 1, isTogglable = false, toolTip = "Opens the main settings page for the menu."},
 
-                new ButtonInfo { buttonText = "Room Mods", method =() => currentCategory = 5, isTogglable = false, toolTip = "Opens the room mods tab."},
-                new ButtonInfo { buttonText = "Movement Mods", method =() => currentCategory = 6, isTogglable = false, toolTip = "Opens the movement mods tab."},
+                new ButtonInfo { buttonText = "Room Mods", method =() => currentCategory = 5, isTogglable = false, toolTip = "Opens the room mods tab."},                new ButtonInfo { buttonText = "Movement Mods", method =() => currentCategory = 6, isTogglable = false, toolTip = "Opens the movement mods tab."},
                 new ButtonInfo { buttonText = "Safety Mods", method =() => currentCategory = 7, isTogglable = false, toolTip = "Opens the safety mods tab."},
                 new ButtonInfo { buttonText = "Fun/Challenge Mods", method =() => currentCategory = 8, isTogglable = false, toolTip = "Opens the Fun/Challenge mods tab."},
                 new ButtonInfo { buttonText = "Nametags Mods", method =() => currentCategory = 9, isTogglable = false, toolTip = "Opens the Nametags mods tab."},
@@ -60,6 +61,7 @@ namespace StupidTemplate.Menu
                 new ButtonInfo { buttonText = "FPS Counter", enableMethod =() => fpsCounter = true, disableMethod =() => fpsCounter = false, enabled = fpsCounter, toolTip = "Toggles the FPS counter."},
                 new ButtonInfo { buttonText = "Disconnect Button", enableMethod =() => disconnectButton = true, disableMethod =() => disconnectButton = false, enabled = disconnectButton, toolTip = "Toggles the disconnect button."},
                 new ButtonInfo { buttonText = "Reconnect Button", enableMethod =() => reconnectButton = true, disableMethod =() => reconnectButton = false, enabled = reconnectButton, toolTip = "Toggles the reconnect button."},
+                new ButtonInfo { buttonText = "Thick Menu", enableMethod =() => thickmenu = true, disableMethod =() => thickmenu = false, enabled = thickmenu, toolTip = "Toggles the width of the menu."},
             },
 
             new ButtonInfo[] { // Movement Settings [3]
@@ -82,18 +84,18 @@ namespace StupidTemplate.Menu
                 new ButtonInfo { buttonText = "Return to Main", method =() => currentCategory = 0, isTogglable = false, toolTip = "Returns to the main page of the menu."},
 
                 new ButtonInfo { buttonText = "Disconnect", method =() => Room.Disconnect(), isTogglable = false, toolTip = "Disconnects you from the room."},
-                new ButtonInfo { buttonText = "Reconnect", method =() => Room.Reconnect(), isTogglable = false, toolTip = "Reconnects you from the room."},
-                new ButtonInfo { buttonText = "Connect to Room <color=gray>[</color><color=green> UKRAINE </color><color=gray>]</color>", method =() => Room.JoinRoomUkraine(), isTogglable = false, toolTip = "Connects you to the room UKRAINE."},
-                new ButtonInfo { buttonText = "Connect to Room <color=gray>[</color><color=green> UKRAINE1 </color><color=gray>]</color>", method =() => Room.JoinRoomUkraine1(), isTogglable = false, toolTip = "Connects you to the room UKRAINE1."},
-                new ButtonInfo { buttonText = "Connect to Room <color=gray>[</color><color=green> UKRAINE2 </color><color=gray>]</color>", method =() => Room.JoinRoomUkraine2(), isTogglable = false, toolTip = "Connects you to the room UKRAINE2."},
-                new ButtonInfo { buttonText = "Connect to Room <color=gray>[</color><color=green> UKRAINE3 </color><color=gray>]</color>", method =() => Room.JoinRoomUkraine3(), isTogglable = false, toolTip = "Connects you to the room UKRAINE3."},
-                new ButtonInfo { buttonText = "Connect to Room <color=gray>[</color><color=green> UKRAINE4 </color><color=gray>]</color>", method =() => Room.JoinRoomUkraine4(), isTogglable = false, toolTip = "Connects you to the room UKRAINE4."},
-                new ButtonInfo { buttonText = "Connect to Room <color=gray>[</color><color=green> UKRAINE5 </color><color=gray>]</color>", method =() => Room.JoinRoomUkraine5(), isTogglable = false, toolTip = "Connects you to the room UKRAINE5."},
-                new ButtonInfo { buttonText = "Connect to Room <color=gray>[</color><color=green> VANVANI41 </color><color=gray>]</color>", method =() => Room.JoinRoomVanvani41(), isTogglable = false, toolTip = "Connects you to the room VANVANI41."},
-                new ButtonInfo { buttonText = "Connect to Room <color=gray>[</color><color=green> V41FAN </color><color=gray>]</color>", method =() => Room.JoinRoomV41Fan(), isTogglable = false, toolTip = "Connects you to the room V41FAN."},
-                new ButtonInfo { buttonText = "Connect to Room <color=gray>[</color><color=green> PBBV </color><color=gray>]</color>", method =() => Room.JoinRoomPBBV(), isTogglable = false, toolTip = "Connects you to the room PBBV."},
-                new ButtonInfo { buttonText = "Connect to Room <color=gray>[</color><color=green> DAISY09 </color><color=gray>]</color>", method =() => Room.JoinRoomDAISY09(), isTogglable = false, toolTip = "Connects you to the DAISY09."},
-                new ButtonInfo { buttonText = "Connect to Room <color=gray>[</color><color=green> ECHO </color><color=gray>]</color>", method =() => Room.JoinRoomECHO(), isTogglable = false, toolTip = "Connects you to the room ECHO."},
+                new ButtonInfo { buttonText = "Reconnect", method =() => Room.Reconnect(), isTogglable = false, toolTip = "Reconnects you to the room."},
+                new ButtonInfo { buttonText = "Connect to Room <color=gray>[</color><color=green> UKRAINE </color><color=gray>]</color>", method =() => Room.JoinRoom("UKRAINE"), isTogglable = false, toolTip = "Connects you to the room UKRAINE."},
+                new ButtonInfo { buttonText = "Connect to Room <color=gray>[</color><color=green> UKRAINE1 </color><color=gray>]</color>", method =() => Room.JoinRoom("UKRAINE1"), isTogglable = false, toolTip = "Connects you to the room UKRAINE1."},
+                new ButtonInfo { buttonText = "Connect to Room <color=gray>[</color><color=green> UKRAINE2 </color><color=gray>]</color>", method =() => Room.JoinRoom("UKRAINE2"), isTogglable = false, toolTip = "Connects you to the room UKRAINE2."},
+                new ButtonInfo { buttonText = "Connect to Room <color=gray>[</color><color=green> UKRAINE3 </color><color=gray>]</color>", method =() => Room.JoinRoom("UKRAINE3"), isTogglable = false, toolTip = "Connects you to the room UKRAINE3."},
+                new ButtonInfo { buttonText = "Connect to Room <color=gray>[</color><color=green> UKRAINE4 </color><color=gray>]</color>", method =() => Room.JoinRoom("UKRAINE4"), isTogglable = false, toolTip = "Connects you to the room UKRAINE4."},
+                new ButtonInfo { buttonText = "Connect to Room <color=gray>[</color><color=green> UKRAINE5 </color><color=gray>]</color>", method =() => Room.JoinRoom("UKRAINE5"), isTogglable = false, toolTip = "Connects you to the room UKRAINE5."},
+                new ButtonInfo { buttonText = "Connect to Room <color=gray>[</color><color=green> VANVANI41 </color><color=gray>]</color>", method =() => Room.JoinRoom("VANVANI41"), isTogglable = false, toolTip = "Connects you to the room VANVANI41."},
+                new ButtonInfo { buttonText = "Connect to Room <color=gray>[</color><color=green> V41FAN </color><color=gray>]</color>", method =() => Room.JoinRoom("V41FAN"), isTogglable = false, toolTip = "Connects you to the room V41FAN."},
+                new ButtonInfo { buttonText = "Connect to Room <color=gray>[</color><color=green> PBBV </color><color=gray>]</color>", method =() => Room.JoinRoom("PBBV"), isTogglable = false, toolTip = "Connects you to the room PBBV."},
+                new ButtonInfo { buttonText = "Connect to Room <color=gray>[</color><color=green> DAISY09 </color><color=gray>]</color>", method =() => Room.JoinRoom("DAISY09"), isTogglable = false, toolTip = "Connects you to the room DAISY09."},
+                new ButtonInfo { buttonText = "Connect to Room <color=gray>[</color><color=green> ECHO </color><color=gray>]</color>", method =() => Room.JoinRoom("ECHO"), isTogglable = false, toolTip = "Connects you to the room ECHO."},
             },
 
             new ButtonInfo[] { // Movement Mods [6]
@@ -103,19 +105,24 @@ namespace StupidTemplate.Menu
                 new ButtonInfo { buttonText = "Platforms <color=gray>[</color><color=green> T </color><color=gray>]</color>", method =() => Movement.TriggerPlatforms(), toolTip = "Spawns platforms on your hands when pressing trigger."},
                 new ButtonInfo { buttonText = "Sticky Platforms <color=gray>[</color><color=green> G </color><color=gray>]</color>", method =() => Movement.GripStickyPlatforms(), toolTip = "Spawns platforms on your hands when pressing grip."},
                 new ButtonInfo { buttonText = "Sticky Platforms <color=gray>[</color><color=green> T </color><color=gray>]</color>", method =() => Movement.TriggerStickyPlatforms(), toolTip = "Spawns platforms on your hands when pressing trigger."},
+                new ButtonInfo { buttonText = "Noclip Platforms <color=gray>[</color><color=green> G </color><color=gray>]</color>", method =() => Movement.GripNoclipPlatforms(), disableMethod =() => Movement.NoclipPlatforms(false), toolTip = "Spawns platforms on your hands when pressing grip."},
+                new ButtonInfo { buttonText = "Noclip Platforms <color=gray>[</color><color=green> T </color><color=gray>]</color>", method =() => Movement.TriggerNoclipPlatforms(), disableMethod =() => Movement.NoclipPlatforms(false), toolTip = "Spawns platforms on your hands when pressing trigger."},
+                new ButtonInfo { buttonText = "Noclip Sticky Platforms <color=gray>[</color><color=green> G </color><color=gray>]</color>", method =() => Movement.GripNoclipStickyPlatforms(), disableMethod =() => Movement.NoclipPlatforms(false), toolTip = "Spawns platforms on your hands when pressing grip."},
+                new ButtonInfo { buttonText = "Noclip Sticky Platforms <color=gray>[</color><color=green> T </color><color=gray>]</color>", method =() => Movement.TriggerNoclipStickyPlatforms(), disableMethod =() => Movement.NoclipPlatforms(false), toolTip = "Spawns platforms on your hands when pressing trigger."},
                 new ButtonInfo { buttonText = "Fly <color=gray>[</color><color=green> A </color><color=gray>]</color>", method =() => Movement.Fly(), toolTip = "Sends you forward when holding A."},
-                new ButtonInfo { buttonText = "Noclip Fly <color=gray>[</color><color=green> A </color><color=gray>]</color>", method =() => Movement.NoclipFly(), toolTip = "Sends you forward when holding A with Noclip."},
+                new ButtonInfo { buttonText = "Noclip Fly <color=gray>[</color><color=green> A </color><color=gray>]</color>", method =() => Movement.NoclipFly(), disableMethod =() => Movement.NoclipFlyDisable(), toolTip = "Sends you forward when holding A with Noclip."},
                 new ButtonInfo { buttonText = "WASD Fly <color=gray>[</color><color=green> WASD </color><color=gray>]</color>", method =() => Movement.WASDFly(), toolTip = "Fly on WASD!!"},
                 new ButtonInfo { buttonText = "Noclip <color=gray>[</color><color=green> RT </color><color=gray>]</color>", method =() => Movement.NoclipRT(), toolTip = "Noclips you when holding right trigger."},
                 new ButtonInfo { buttonText = "Noclip <color=gray>[</color><color=green> LT </color><color=gray>]</color>", method =() => Movement.NoclipLT(), toolTip = "Noclips you when holding right trigger."},
-                new ButtonInfo { buttonText = "Speedboost", enableMethod =() => Movement.Speedboost(), disableMethod =() => Movement.SpeedboostDisable(), toolTip = "Makes you faster."},
+                new ButtonInfo { buttonText = "Speedboost", enableMethod =() => Movement.Speedboost(), disableMethod =() => Movement.SpeedboostDisable(), method =() => Movement.Speedboost(), toolTip = "Makes you faster."},
                 new ButtonInfo { buttonText = "Car Monke <color=gray>[</color><color=green> G </color><color=gray>]</color>", method =() => Movement.CarMonkeG(), toolTip = "Ride forward when holding right grip and back when holding left grip."},
                 new ButtonInfo { buttonText = "Car Monke <color=gray>[</color><color=green> T </color><color=gray>]</color>", method =() => Movement.CarMonkeT(), toolTip = "Ride forward when holding right trigger and back when holding left trigger."},
                 new ButtonInfo { buttonText = "Ghost Monke <color=gray>[</color><color=green> XH </color><color=gray>]</color>", method =() => Movement.GhostMonkeXH(), toolTip = "Freezes you when holding X."},
                 new ButtonInfo { buttonText = "Ghost Monke <color=gray>[</color><color=green> XT </color><color=gray>]</color>", method =() => Movement.GhostMonkeXT(), toolTip = "Freezes you when pressing X."},
                 new ButtonInfo { buttonText = "Invis Monke <color=gray>[</color><color=green> AH </color><color=gray>]</color>", method =() => Movement.InvisMonkeAH(), toolTip = "Making you invisible when holding A."},
                 new ButtonInfo { buttonText = "Invis Monke <color=gray>[</color><color=green> AT </color><color=gray>]</color>", method =() => Movement.InvisMonkeAT(), toolTip = "Making you invisible when pressing A."},
-                new ButtonInfo { buttonText = "Slow Motion", enableMethod = Movement.SlowMotion, disableMethod = Movement.SlowMotionDisable, toolTip = "Slows down time (client-sided)."},
+                new ButtonInfo { buttonText = "Slow Motion <color=gray>[</color><color=green> BH </color><color=gray>]</color>", method = Movement.SlowMotionBH, toolTip = "Slows down time when holding B."},
+                new ButtonInfo { buttonText = "Slow Motion <color=gray>[</color><color=green> BT </color><color=gray>]</color>", method = Movement.SlowMotionBT, toolTip = "Slows down time when pressing B."},
             },
 
             new ButtonInfo[] { // Safety Mods [7]
@@ -143,12 +150,11 @@ namespace StupidTemplate.Menu
             new ButtonInfo[] { // Nametags Mods [9]
                 new ButtonInfo { buttonText = "Return to Main", method =() => currentCategory = 0, isTogglable = false, toolTip = "Returns to the main page of the menu."},
 
-                new ButtonInfo { buttonText = "Force nametags to face you", enableMethod = () => Nametags.EnableForceFace(), disableMethod = () => Nametags.DisableForceFace(), toolTip = "Forces nametags to face you"},
                 new ButtonInfo { buttonText = "Name Nametags", enableMethod =() => Nametags.EnableNameTags(), disableMethod =() => Nametags.DisableNameTags(), toolTip = "Turns on Name Nametag."},
                 new ButtonInfo { buttonText = "ID Nametags", enableMethod =() => Nametags.EnableIdTags(), disableMethod =() => Nametags.DisableIdTags(), toolTip = "Turns on ID Nametag."},
             },
 
-            /*new ButtonInfo[] { // Overpowered Mods [10]
+            /*new ButtonInfo[] { // Overpowered Mods [?]
                 new ButtonInfo { buttonText = "Return to Main", method =() => currentCategory = 0, isTogglable = false, toolTip = "Returns to the main page of the menu."},
 
 
@@ -157,6 +163,7 @@ namespace StupidTemplate.Menu
             new ButtonInfo[] { // Guns [10]
                 new ButtonInfo { buttonText = "Return to Main", method =() => currentCategory = 0, isTogglable = false, toolTip = "Returns to the main page of the menu."},
 
+                new ButtonInfo { buttonText = "Master Guns", method =() => currentCategory = 15, toolTip = "Opens Master Guns tab."},
                 new ButtonInfo { buttonText = "Teleport Gun", method =() => Guns.TeleportGun(), toolTip = "Teleports you to wherever your pointer is when pressing trigger."},
                 new ButtonInfo { buttonText = "Tag Gun", method =() => Guns.TagGun(), toolTip = "Teleports you to a player for 0.3s to tag him,  then returns you back."},
             },
@@ -171,15 +178,38 @@ namespace StupidTemplate.Menu
             new ButtonInfo[] { // Visual Mods [12]
                 new ButtonInfo { buttonText = "Return to Main", method = () => currentCategory = 0, isTogglable = false, toolTip = "Returns to the main page." },
 
-                new ButtonInfo { buttonText = "ESP", enableMethod = Visual.RunESP, disableMethod = () => Visual.DisableESP(), toolTip = "Shows player lines and distance." },
-                new ButtonInfo { buttonText = "Trail", enableMethod =() => Visual.EnableTrail(), disableMethod =() => Visual.DisableTrail(), toolTip = "You will leave a trail behind yourself."}
+                new ButtonInfo { buttonText = "ESP", method = () => currentCategory = 13, isTogglable = false, toolTip = "Opens the ESP tab." },
+                new ButtonInfo { buttonText = "Trail (Purple)", method = Visual.RunTrail, enableMethod = Visual.EnableTrail, disableMethod = Visual.DisableTrail, toolTip = "You will leave a trail behind your hands."},
             },
 
-            /*new ButtonInfo[] { // Modsided Mods [13]
+            new ButtonInfo[] { // ESP [13]
+                new ButtonInfo { buttonText = "Return to Visual Mods", method = () => currentCategory = 12, isTogglable = false, toolTip = "Returns to the visual mods page." },
+
+                new ButtonInfo { buttonText = "Box ESP", method = Visual.RunBoxESP, disableMethod = Visual.DisableBoxESP, toolTip = "Draws a box around players." },
+                new ButtonInfo { buttonText = "Bone ESP", method = Visual.RunBoneESP, disableMethod = Visual.DisableBoneESP, toolTip = "Draws a simple skeleton over players." },
+                new ButtonInfo { buttonText = "Head ESP", method = Visual.RunHeadESP, disableMethod = Visual.DisableHeadESP, toolTip = "Draws a marker around player heads." },
+                new ButtonInfo { buttonText = "Distance ESP", method = Visual.RunDistanceESP, disableMethod = Visual.DisableDistanceESP, toolTip = "Shows player distance above their heads." },
+                new ButtonInfo { buttonText = "Tracers", method = Visual.RunESP, disableMethod = Visual.DisableESP, toolTip = "Draws tracers from you to players." },
+            },
+
+            /*new ButtonInfo[] { // Modsided Mods [?]
                 new ButtonInfo { buttonText = "Return to Main", method = () => currentCategory = 0, isTogglable = false, toolTip = "Returns to the main page." },
 
 
             },*/
+            
+            new ButtonInfo[] { // Console [14]
+                new ButtonInfo { buttonText = "Return to Main", method = () => currentCategory = 0, isTogglable = false, toolTip = "Returns to the main page." },
+
+            },
+            new ButtonInfo[] { // Master Guns [15]
+                new ButtonInfo { buttonText = "Return to Main", method = () => currentCategory = 0, isTogglable = false, toolTip = "Returns to the main page." },
+
+                new ButtonInfo { buttonText = "Are you a master client?", method =() => Master.CheckIsMaster(), isTogglable = false, toolTip = "Checks if you are the master client."},
+                new ButtonInfo { buttonText = "Kick Gun", method =() => Master.KickGun(), toolTip = "Kicks whoever your pointer is on."},
+                new ButtonInfo { buttonText = "Lag Gun", method =() => Master.LagGun(), toolTip = "Lags whoever your pointer is on."},
+                new ButtonInfo { buttonText = "Ghost Gun", method = () => Master.ghostGunEnabled = !Master.ghostGunEnabled, toolTip = "Ghosts whoever your pointer is on."},
+            },
         };
     }
-}
+};

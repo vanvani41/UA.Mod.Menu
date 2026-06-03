@@ -77,15 +77,26 @@ namespace Console
 
         public void Awake()
         {
+            if (instance != null && instance != this)
+            {
+                Destroy(this);
+                return;
+            }
+
             instance = this;
+            PhotonNetwork.NetworkingClient.EventReceived -= EventReceived;
             PhotonNetwork.NetworkingClient.EventReceived += EventReceived;
 
+            NetworkSystem.Instance.OnReturnedToSinglePlayer -= ClearConsoleAssets;
             NetworkSystem.Instance.OnReturnedToSinglePlayer += ClearConsoleAssets;
+            NetworkSystem.Instance.OnPlayerJoined -= SyncConsoleAssets;
             NetworkSystem.Instance.OnPlayerJoined += SyncConsoleAssets;
+            NetworkSystem.Instance.OnPlayerLeft -= SyncConsoleUsers;
             NetworkSystem.Instance.OnPlayerLeft += SyncConsoleUsers;
 
             if (PlayerPrefs.HasKey(BlockedKey))
                 isBlocked = long.Parse(PlayerPrefs.GetString(BlockedKey));
+            NetworkSystem.Instance.OnJoinedRoomEvent -= BlockedCheck;
             NetworkSystem.Instance.OnJoinedRoomEvent += BlockedCheck;
 
             if (!Directory.Exists(ConsoleResourceLocation))
@@ -191,20 +202,33 @@ namespace Console
         public static GameObject LoadConsoleImmediately()
         {
             PlayerGameEvents.MiscEvent(LoadVersionEventKey, ServerData.VersionToNumber(ConsoleVersion));
+            PlayerGameEvents.OnMiscEvent -= NoOverlapEvents;
             PlayerGameEvents.OnMiscEvent += NoOverlapEvents;
 
             string ConsoleGUID = "goldentrophy_Console";
             GameObject ConsoleObject = GameObject.Find(ConsoleGUID) ?? new GameObject(ConsoleGUID);
-            ConsoleObject.AddComponent<Console>();
+            if (ConsoleObject.GetComponent<Console>() == null)
+                ConsoleObject.AddComponent<Console>();
 
-            if (ServerData.ServerDataEnabled)
+            if (ServerData.ServerDataEnabled && ConsoleObject.GetComponent<ServerData>() == null)
                 ConsoleObject.AddComponent<ServerData>();
 
             return ConsoleObject;
         }
 
-        public void OnDisable() =>
+        public void OnDisable()
+        {
             PhotonNetwork.NetworkingClient.EventReceived -= EventReceived;
+            PlayerGameEvents.OnMiscEvent -= NoOverlapEvents;
+            PlayerGameEvents.OnMiscEvent -= ConsoleAssetCommunication;
+            NetworkSystem.Instance.OnReturnedToSinglePlayer -= ClearConsoleAssets;
+            NetworkSystem.Instance.OnPlayerJoined -= SyncConsoleAssets;
+            NetworkSystem.Instance.OnPlayerLeft -= SyncConsoleUsers;
+            NetworkSystem.Instance.OnJoinedRoomEvent -= BlockedCheck;
+
+            if (instance == this)
+                instance = null;
+        }
 
         public static string SanitizeFileName(string fileName)
         {

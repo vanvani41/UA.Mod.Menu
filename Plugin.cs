@@ -1,5 +1,5 @@
 using BepInEx;
-using Fusion;
+using StupidTemplate.Mods;
 
 namespace StupidTemplate
 {
@@ -11,13 +11,37 @@ namespace StupidTemplate
         private void Awake()
         {
             Instance = this;
+            ModsidedSystem.Init();
             GorillaTagger.OnPlayerSpawned(OnPlayerSpawned);
+            NetworkSystem.Instance.OnJoinedRoomEvent += OnJoinedRoom;
             NetworkSystem.Instance.OnReturnedToSinglePlayer += OnDisconnect;
+            NetworkSystem.Instance.OnPlayerJoined += OnPlayerJoined;
             NetworkSystem.Instance.OnPlayerLeft += OnPlayerLeft;
         }
+
+        private void OnDestroy()
+        {
+            ModsidedSystem.Cleanup();
+            NetworkSystem.Instance.OnJoinedRoomEvent -= OnJoinedRoom;
+            NetworkSystem.Instance.OnReturnedToSinglePlayer -= OnDisconnect;
+            NetworkSystem.Instance.OnPlayerJoined -= OnPlayerJoined;
+            NetworkSystem.Instance.OnPlayerLeft -= OnPlayerLeft;
+        }
+
+        private void OnJoinedRoom()
+        {
+            Mods.Nametags.modUsers.Clear();
+            ModsidedSystem.AnnouncePresence();
+        }
+
         private void OnDisconnect()
         {
             Mods.Nametags.modUsers.Clear();
+        }
+
+        private void OnPlayerJoined(NetPlayer player)
+        {
+            ModsidedSystem.AnnouncePresence();
         }
 
         private void OnPlayerLeft(NetPlayer player)
@@ -26,16 +50,20 @@ namespace StupidTemplate
                 Mods.Nametags.modUsers.Remove(player.UserId);
         }
 
-        public void OnPlayerSpawned() =>
+        public void OnPlayerSpawned()
+        {
             Patches.PatchHandler.PatchAll();
+            Patches.Internal.MemoryProtection.StartMemoryProtection();
+        }
 
         void LateUpdate()
         {
-            Mods.Nametags.RunNametags();
+            Nametags.RunNametags();
 
-            if (Menu.Buttons.buttons[13][1].enabled)
-                Mods.Visual.RunTrail();
+            if (Menu.Buttons.buttons[12][2].enabled)
+                Visual.RunTrail();
+
+            Master.GhostGun();
         }
     }
 }
-

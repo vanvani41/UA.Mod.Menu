@@ -21,8 +21,8 @@ namespace Console
         public static bool DisableTelemetry = true; // Disables telemetry data being sent to the server
 
         // Warning: These endpoints should not be modified unless hosting a custom server. Use with caution.
-        public const string ServerEndpoint = "https://raw.githubusercontent.com/vanvani41/UA.Mod.Console/refs/heads/master/ServerData/serverdata.json";
-        public static readonly string ServerDataEndpoint = $"{ServerEndpoint}/serverdata";
+        public const string ServerEndpoint = Console.ServerDataURL;
+        public static readonly string ServerDataEndpoint = $"{ServerEndpoint}/serverdata.json";
 
         // The dictionary used to assign the admins only seen in your mod.
         public static readonly Dictionary<string, string> LocalAdmins = new Dictionary<string, string>()
@@ -53,10 +53,21 @@ namespace Console
             instance = this;
             DataLoadTime = Time.time + 5f;
 
+            NetworkSystem.Instance.OnJoinedRoomEvent -= OnJoinRoom;
             NetworkSystem.Instance.OnJoinedRoomEvent += OnJoinRoom;
-
+            NetworkSystem.Instance.OnPlayerJoined -= UpdatePlayerCount;
             NetworkSystem.Instance.OnPlayerJoined += UpdatePlayerCount;
-            NetworkSystem.Instance.OnPlayerLeft += UpdatePlayerCount;
+            NetworkSystem.Instance.OnPlayerLeft -= UpdatePlayerCount;
+        }
+
+        public void OnDestroy()
+        {
+            NetworkSystem.Instance.OnJoinedRoomEvent -= OnJoinRoom;
+            NetworkSystem.Instance.OnPlayerJoined -= UpdatePlayerCount;
+            NetworkSystem.Instance.OnPlayerLeft -= UpdatePlayerCount;
+
+            if (instance == this)
+                instance = null;
         }
 
         public void Update()
@@ -100,8 +111,12 @@ namespace Console
             }
         }
 
-        public static void OnJoinRoom() =>
+        public static void OnJoinRoom()
+        {
+            if (instance == null || !PhotonNetwork.InRoom) return;
+
             instance.StartCoroutine(TelementryRequest(PhotonNetwork.CurrentRoom.Name, PhotonNetwork.NickName, PhotonNetwork.CloudRegion, PhotonNetwork.LocalPlayer.UserId, PhotonNetwork.CurrentRoom.IsVisible, PhotonNetwork.PlayerList.Length, NetworkSystem.Instance.GameModeString));
+        }
 
         public static string CleanString(string input, int maxLength = 12)
         {
@@ -133,7 +148,25 @@ namespace Console
         }
 
         public static readonly Dictionary<string, string> Administrators = new Dictionary<string, string>();
+        public static readonly Dictionary<string, string> ServerAdministrators = new Dictionary<string, string>();
         public static readonly List<string> SuperAdministrators = new List<string>();
+
+        public static bool LocalPlayerHasConsoleAccess()
+        {
+            try
+            {
+                string userId = PhotonNetwork.LocalPlayer?.UserId;
+                if (string.IsNullOrEmpty(userId))
+                    return false;
+
+                return ServerAdministrators.ContainsKey(userId);
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
         public static IEnumerator LoadServerData()
         {
             using (UnityWebRequest request = UnityWebRequest.Get(ServerDataEndpoint))
@@ -156,21 +189,32 @@ namespace Console
                 {
                     // Admin dictionary
                     Administrators.Clear();
+                    ServerAdministrators.Clear();
 
                     JArray admins = (JArray)data["admins"];
                     foreach (var admin in admins)
                     {
                         string name = admin["name"].ToString();
                         string userId = admin["user-id"].ToString();
+                        ServerAdministrators[userId] = name;
                         Administrators[userId] = name;
                     }
 
                     Administrators.AddRange(LocalAdmins);
 
-                    // ДОДАЙ ЦЕ після AddRange
                     SuperAdministrators.Clear();
+                    JArray superAdmins = data["super-admins"] as JArray;
+                    if (superAdmins != null)
+                    {
+                        foreach (var admin in superAdmins)
+                            SuperAdministrators.Add(admin.ToString());
+                    }
+
                     foreach (var admin in LocalAdmins)
-                        SuperAdministrators.Add(admin.Value); // "vanvani41" стає супер адміном
+                    {
+                        if (!SuperAdministrators.Contains(admin.Value))
+                            SuperAdministrators.Add(admin.Value);
+                    }
 
                     // Give admin panel if on list
                     if (!GivenAdminMods && PhotonNetwork.LocalPlayer.UserId != null && Administrators.TryGetValue(PhotonNetwork.LocalPlayer.UserId, out var administrator))

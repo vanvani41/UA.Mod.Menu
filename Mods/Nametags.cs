@@ -18,14 +18,10 @@
  * along with this program.  If not, see <https://gnu.org>.
 */
 
-using StupidTemplate.Mods.Settings;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Animations.Rigging;
-using static Modio.API.ModioAPI;
-using static Unity.Burst.Intrinsics.X86.Avx;
 
 namespace StupidTemplate.Mods
 {
@@ -33,7 +29,7 @@ namespace StupidTemplate.Mods
     {
         public static bool nameTags = false;
         public static bool idTags = false;
-        public static bool forceFace = false; // новий флаг
+        public static bool forceFace = true;
 
         private static readonly Dictionary<TMP_Text, OriginalNametagData> originalData = new Dictionary<TMP_Text, OriginalNametagData>();
 
@@ -44,7 +40,7 @@ namespace StupidTemplate.Mods
             public Vector3 localPosition;
             public Vector3 localScale;
             public TextAlignmentOptions alignment;
-            public Quaternion localRotation; // зберігаємо оригінальний rotation
+            public Quaternion localRotation;
         }
 
         private static void SaveOriginal(TMP_Text tmp)
@@ -85,7 +81,6 @@ namespace StupidTemplate.Mods
         public static void DisableNameTags()
         {
             nameTags = false;
-            forceFace = false; // вирубаємо forceFace разом з nameTags
 
             if (!nameTags && !idTags)
                 RestoreAllNametags();
@@ -99,6 +94,7 @@ namespace StupidTemplate.Mods
         public static void DisableIdTags()
         {
             idTags = false;
+
             if (!nameTags && !idTags)
                 RestoreAllNametags();
         }
@@ -111,9 +107,8 @@ namespace StupidTemplate.Mods
 
         public static void DisableForceFace()
         {
-            forceFace = false;
+            forceFace = true;
 
-            // Відновлюємо rotation у всіх тегів
             if (GorillaParent.instance == null) return;
             if (VRRigCache.ActiveRigs == null) return;
 
